@@ -38,7 +38,10 @@ function ConfirmationTable(props) {
                 <strong>{formInfo.name}</strong> Your Reservation Has Been Confirmed &amp; Stored in Local Storage!
             </>);
 
-         history.push("/") 
+        props.editinfo(false);
+        localStorage.removeItem(EDITING_KEY)
+
+        history.push("/")
 
     };
 
@@ -50,7 +53,7 @@ function ConfirmationTable(props) {
 
         await props.editinfo(true);
 
-        await history.push("/") 
+        await history.push("/")
     };
 
     // Returns/Displays HTML elements on the page.

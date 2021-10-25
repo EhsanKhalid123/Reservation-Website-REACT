@@ -126,7 +126,7 @@ function ReservationForm(props) {
                             {/* Input Fields and Images */}
 
                             <img style={{ width: "35px", marginBottom: "15px" }} src="baseline_person_black_24dp.png" alt="Person Icon" />
-                            <input style={{ width: "25%", border: "none", borderBottom: "2px solid grey", margin: "20px 20px 0 10px" }} type="text" id="name" name="name" placeholder="name" onChange={handleChange} value={values.name = "" || edit[0]['name'] } />
+                            <input style={{ width: "25%", border: "none", borderBottom: "2px solid grey", margin: "20px 20px 0 10px" }} type="text" id="name" name="name" placeholder="name" onChange={handleChange} value={values.name || edit[0]['name'] } />
                             <img style={{ width: "35px", marginBottom: "15px" }} src="baseline_check_box_black_24dp.png" alt="Meal Icon" />
                             <select onChange={handleChange} style={{ width: "25%", border: "none", borderBottom: "2px solid grey", margin: "20px 0 0 5px" }} type="text" id="meal" name="meal" placeholder="meal"><option style={{ color: "grey" }} hidden>{values.meal = edit[0]['meal']}</option><option style={{ color: "black" }} value="Breakfast">Breakfast</option><option style={{ color: "black" }} value="Lunch">Lunch</option><option style={{ color: "black" }} value="Dinner">Dinner</option> </select>
 
@@ -166,7 +166,7 @@ function ReservationForm(props) {
 
                             {/* Input Fields and Images */}
                             <img style={{ width: "35px", marginBottom: "15px" }} src="baseline_people_black_24dp.png" alt="Guest Icon" />
-                            <input style={{ width: "25%", border: "none", borderBottom: "2px solid grey", margin: "20px 20px 0 5px" }} type="number" id="guests" name="guests" placeholder="guests" onChange={handleChange} value={values.guests || '' || edit[0]['guests']} />
+                            <input style={{ width: "25%", border: "none", borderBottom: "2px solid grey", margin: "20px 20px 0 5px" }} type="number" id="guests" name="guests" placeholder="guests" onChange={handleChange} value={values.guests = edit[0]['guests'] || ""} />
                             <img style={{ width: "35px", marginBottom: "15px" }} src="baseline_favorite_black_24dp.png" alt="Heart Icon" />
                             <input style={{ width: "25%", border: "none", borderBottom: "2px solid grey", margin: "20px 0 0 5px" }} type="text" id="foodpreferences" name="preferences" placeholder="Food preferences" onChange={handleChange} value={values.preferences = edit[0]['preferences']} />
 
