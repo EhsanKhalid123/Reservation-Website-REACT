@@ -1,8 +1,8 @@
 // Import statements for Libraries.
 import react, { useState, useEffect, useContext } from 'react';
-import { Link, useHistory } from 'react-router-dom';
-import ConfirmationTable from './ConfirmationTable';
+import { useHistory } from 'react-router-dom';
 import formInfor from "./formInfor";
+import MessageContext from "./MessageContext";
 
 // Functional Component for the Reservation Form. 
 function ReservationForm(props) {
@@ -15,6 +15,8 @@ function ReservationForm(props) {
     // An Attempt to store use input data in a state variable below.
     const [formInfo, setFormInfo2] = useState([]);
     const [isSubmitting, setIsSubmitting] = useState(false);
+    // useContext Hook declared for showing message
+    const { message } = useContext(MessageContext);
 
     // UseEffect Hook Run once initally and everytime the variable errors and isSubmitting changes.
     useEffect(() => {
@@ -27,26 +29,6 @@ function ReservationForm(props) {
             // Sending userData to Apps page props funciton submission2 and then sending that data to ConfirmationPage to access the formInfo but it doesnt work
             props.submission2(true, formInfo)
             history.push("/ConfirmationTable");
-            //   setValues(values => ({...values, success: "Successfully Signed Up, Use the Sign In tab to Login!" }));
-
-
-            //   // User data is hard-coded, passwords are in plain-text.
-            //   const users = [{ ...values, currentDateTime }];
-
-            //   // users.push(values); 
-            //   // users[values.username] = users
-
-            //   // Increment Data, Add more users if already existing
-            //   if (localStorage.getItem(USERS_KEY) !== null) {
-            //     localStorage.setItem(USERS_KEY + increment, JSON.stringify(users));
-            //     setIncrement(increment + 1);
-            //   }
-            //   else
-            //     // Set data into local storage.
-            //     localStorage.setItem(USERS_KEY, JSON.stringify(users));
-
-            //   callback();
-
         }
     }, [errors, isSubmitting]);
 
@@ -121,6 +103,7 @@ function ReservationForm(props) {
         <div>
             {/* Header */}
             <div style={{ background: "linear-gradient(to left, Grey , lightGrey)", height: "100px", textAlign: "left", padding: "30px 0 0 20%", fontWeight: "bold", fontSize: "30px" }}>Reservation</div>
+            {message !== null && <div className="alert alert-success" style={{ margin: "20px" }} role="alert">{message}</div>}
             <div style={{ margin: "50px 0 0 0" }} >
                 {/* Form */}
                 <form onSubmit={handleSubmit} noValidate>

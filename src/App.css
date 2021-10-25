@@ -33,7 +33,7 @@
 }
 
 .button1{
-  float: right;
+    float: right;
     margin-right: 22%;
     font-weight: 640;
     background: linear-gradient(to left, grey, lightgrey);
@@ -49,6 +49,43 @@
 
 .button1:active{
   background: lightgrey;
+}
+
+.button2{
+  color: white;
+    margin: 10px;
+    font-weight: 640;
+    background: linear-gradient(to left, red, darkred);
+    border: none;
+    border-radius: 50px;
+    padding: 10px 20px;
+    font-size: 12px;
+}
+
+.button2:hover{
+  background: linear-gradient(to right, red , darkred);
+}
+
+.button2:active{
+  background: red;
+}
+
+.button3{
+  margin: 10px;
+  font-weight: 640;
+  background: linear-gradient(to left, grey, lightgrey);
+  border: none;
+  border-radius: 50px;
+  padding: 10px 20px;
+  font-size: 12px;
+}
+
+.button3:hover{
+background: linear-gradient(to right, Grey , lightGrey);
+}
+
+.button3:active{
+background: lightgrey;
 }
 
 @keyframes App-logo-spin {
