@@ -73,7 +73,7 @@ function ReservationForm(props) {
 
         // Validation statements for Input Fields
         if (!values.name) {
-            errors.name = 'Name is required!'
+            errors.name  = 'Name is required!'
         }
 
         // Validation statements for Input Fields
@@ -130,7 +130,7 @@ function ReservationForm(props) {
                     {/* Input Fields and Images */}
 
                     <img style={{ width: "35px", marginBottom: "15px" }} src="baseline_person_black_24dp.png" alt="Person Icon" />
-                    <input style={{ width: "25%", border: "none", borderBottom: "2px solid grey", margin: "20px 20px 0 10px" }} type="text" id="name" name="name" placeholder="name" onChange={handleChange} value={values.name || ''} />
+                    <input style={{ width: "25%", border: "none", borderBottom: "2px solid grey", margin: "20px 20px 0 10px" }} type="text" id="name" name="name" placeholder="name" aria-label="name" onChange={handleChange} value={values.name || ''} />
                     <img style={{ width: "35px", marginBottom: "15px" }} src="baseline_check_box_black_24dp.png" alt="Meal Icon" />
                     <select onChange={handleChange} style={{ width: "25%", border: "none", borderBottom: "2px solid grey", margin: "20px 0 0 5px" }} type="text" id="meal" name="meal" placeholder="meal"><option style={{ color: "grey" }} hidden >{values.meal || 'meal'}</option><option style={{ color: "black" }} value="Breakfast">Breakfast</option><option style={{ color: "black" }} value="Lunch">Lunch</option><option style={{ color: "black" }} value="Dinner">Dinner</option> </select>
 
@@ -201,7 +201,7 @@ function ReservationForm(props) {
                     <p style={{ marginTop: "35px" }}></p>
                     {/* Submit Button */}
                     <hr style={{ borderTop: "2px solid lightgrey" }} />
-                    <button type="submit" className="button1"><img style={{ marginBottom: "3px", width: "15px" }} src="baseline_send_black_24dp.png" /> RESERVE TABLE</button>
+                    <button title="reserveButton" type="submit" className="button1"><img style={{ marginBottom: "3px", width: "15px" }} src="baseline_send_black_24dp.png" /> RESERVE TABLE</button>
 
                 </form>
             </div>
