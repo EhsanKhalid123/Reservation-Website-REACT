@@ -32,10 +32,24 @@
   color: gray;
 }
 
-.meal option {
-  color: black;
+.button1{
+  float: right;
+    margin-right: 22%;
+    font-weight: 640;
+    background: linear-gradient(to left, grey, lightgrey);
+    border: none;
+    border-radius: 50px;
+    padding: 10px 20px;
+    font-size: 12px;
 }
 
+.button1:hover{
+  background: linear-gradient(to right, Grey , lightGrey);
+}
+
+.button1:active{
+  background: lightgrey;
+}
 
 @keyframes App-logo-spin {
   from {
