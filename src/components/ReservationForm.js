@@ -20,7 +20,7 @@ function ReservationForm(props) {
     // Varaibles and UseState Hook Decalrations.
     let history = useHistory();
 
-    const [values, setValues] = useState({});
+    const [values, setValues] = useState({ name: "", meal: "", date: "", time: "", guests: "", preferences: "", requests: "" });
     const [errors, setErrors] = useState({});
     const [edit, setEdit] = useState(getEditInfo());
     const { setFormInfo } = useContext(formInfor);
@@ -32,7 +32,12 @@ function ReservationForm(props) {
 
     // UseEffect Hook Run once initally and everytime the variable errors and isSubmitting changes.
     useEffect(() => {
-
+        // if props editInfo is true this means user click go back to edit button and will get local storage data for editing and pre populate fields for easy editing
+        {
+            props.editInfo === true &&
+            setValues({ name: edit[0]['name'], meal: edit[0]['meal'], date: edit[0]['date'], time: edit[0]['time'], guests: edit[0]['guests'], preferences: edit[0]['preferences'], requests: edit[0]['requests'] })
+        }
+        // This submit function runs if no errors exist and submitting is true, Navigate to Different Page and sends info to props
         if (Object.keys(errors).length === 0 && isSubmitting) {
             // console.log(values)
             setFormInfo([values]);
@@ -120,170 +125,85 @@ function ReservationForm(props) {
             {message !== null && <div className="alert alert-success" style={{ margin: "20px" }} role="alert">{message}</div>}
             <div style={{ margin: "50px 0 0 0" }} >
 
-                {props.editInfo === true ?
-                    <div>
-                        <form onSubmit={handleSubmit} noValidate>
-                            {/* Input Fields and Images */}
+                {/* Form */}
+                <form onSubmit={handleSubmit} noValidate>
+                    {/* Input Fields and Images */}
 
-                            <img style={{ width: "35px", marginBottom: "15px" }} src="baseline_person_black_24dp.png" alt="Person Icon" />
-                            <input style={{ width: "25%", border: "none", borderBottom: "2px solid grey", margin: "20px 20px 0 10px" }} type="text" id="name" name="name" placeholder="name" onChange={handleChange} value={values.name || edit[0]['name'] } />
-                            <img style={{ width: "35px", marginBottom: "15px" }} src="baseline_check_box_black_24dp.png" alt="Meal Icon" />
-                            <select onChange={handleChange} style={{ width: "25%", border: "none", borderBottom: "2px solid grey", margin: "20px 0 0 5px" }} type="text" id="meal" name="meal" placeholder="meal"><option style={{ color: "grey" }} hidden>{values.meal = edit[0]['meal']}</option><option style={{ color: "black" }} value="Breakfast">Breakfast</option><option style={{ color: "black" }} value="Lunch">Lunch</option><option style={{ color: "black" }} value="Dinner">Dinner</option> </select>
+                    <img style={{ width: "35px", marginBottom: "15px" }} src="baseline_person_black_24dp.png" alt="Person Icon" />
+                    <input style={{ width: "25%", border: "none", borderBottom: "2px solid grey", margin: "20px 20px 0 10px" }} type="text" id="name" name="name" placeholder="name" onChange={handleChange} value={values.name || ''} />
+                    <img style={{ width: "35px", marginBottom: "15px" }} src="baseline_check_box_black_24dp.png" alt="Meal Icon" />
+                    <select onChange={handleChange} style={{ width: "25%", border: "none", borderBottom: "2px solid grey", margin: "20px 0 0 5px" }} type="text" id="meal" name="meal" placeholder="meal"><option style={{ color: "grey" }} hidden >{values.meal || 'meal'}</option><option style={{ color: "black" }} value="Breakfast">Breakfast</option><option style={{ color: "black" }} value="Lunch">Lunch</option><option style={{ color: "black" }} value="Dinner">Dinner</option> </select>
 
-                            {/* Error Messages */}
-                            <div style={{ margin: "0 20% 20% 30%", position: "absolute" }}>
-                                {errors.name && (
-                                    <input disabled style={{ color: "red", border: "none", background: "none", textAlign: "center", fontSize: "18px" }} value={errors.name} />
-                                )}
-                            </div>
-                            <div >
-                                {errors.meal && (
-                                    <input disabled style={{ position: "absolute", width: "30%", color: "red", border: "none", background: "none", textAlign: "center", fontSize: "18px" }} value={errors.meal} />
-                                )}
-                            </div>
-
-                            <p style={{ marginTop: "35px" }}></p>
-
-                            {/* Input Fields and Images */}
-                            <img style={{ width: "35px", marginBottom: "15px" }} src="round_calendar_today_black_24dp.png" alt="Date Icon" />
-                            <input style={{ width: "25%", border: "none", borderBottom: "2px solid grey", margin: "20px 20px 0 5px" }} type="text" id="date" name="date" placeholder="date" onChange={handleChange} value={values.date = edit[0]['date']} />
-                            <img style={{ width: "35px", marginBottom: "15px" }} src="baseline_watch_later_black_24dp.png" alt="Time Icon" />
-                            <input style={{ width: "25%", border: "none", borderBottom: "2px solid grey", margin: "20px 0 0 5px" }} type="text" id="time" name="time" placeholder="time" onChange={handleChange} value={values.time = edit[0]['time']} />
-
-                            {/* Error Messages */}
-                            <div style={{ margin: "0 20% 20% 26%", position: "absolute" }}>
-                                {errors.date && (
-                                    <input disabled style={{ width: "155%", color: "red", border: "none", background: "none", textAlign: "center", fontSize: "18px" }} value={errors.date} />
-                                )}
-                            </div>
-                            <div >
-                                {errors.time && (
-                                    <input disabled style={{ position: "absolute", width: "30%", color: "red", border: "none", background: "none", textAlign: "center", fontSize: "18px" }} value={errors.time} />
-                                )}
-                            </div>
-
-                            <p style={{ marginTop: "35px" }}></p>
-
-                            {/* Input Fields and Images */}
-                            <img style={{ width: "35px", marginBottom: "15px" }} src="baseline_people_black_24dp.png" alt="Guest Icon" />
-                            <input style={{ width: "25%", border: "none", borderBottom: "2px solid grey", margin: "20px 20px 0 5px" }} type="number" id="guests" name="guests" placeholder="guests" onChange={handleChange} value={values.guests = edit[0]['guests'] || ""} />
-                            <img style={{ width: "35px", marginBottom: "15px" }} src="baseline_favorite_black_24dp.png" alt="Heart Icon" />
-                            <input style={{ width: "25%", border: "none", borderBottom: "2px solid grey", margin: "20px 0 0 5px" }} type="text" id="foodpreferences" name="preferences" placeholder="Food preferences" onChange={handleChange} value={values.preferences = edit[0]['preferences']} />
-
-                            {/* Error Messages */}
-                            <div style={{ margin: "0 20% 20% 28%", position: "absolute" }}>
-                                {errors.guests && (
-                                    <input disabled style={{ width: "130%", color: "red", border: "none", background: "none", textAlign: "center", fontSize: "18px" }} value={errors.guests} />
-                                )}
-                            </div>
-                            <div >
-                                {errors.preferences && (
-                                    <input disabled style={{ position: "absolute", width: "30%", color: "red", border: "none", background: "none", textAlign: "center", fontSize: "18px" }} value={errors.preferences} />
-                                )}
-                            </div>
-
-                            <p style={{ marginTop: "35px" }}></p>
-
-                            {/* Input Fields and Images */}
-                            <img style={{ width: "35px", marginBottom: "35px" }} src=" baseline_edit_black_24dp.png" alt="Special Request Icon" />
-                            <textarea style={{ height: "40px", width: "54%", border: "none", borderBottom: "2px solid grey", margin: "20px 0 0 5px" }} type="text" id="specialrequests" name="requests" placeholder="Special Requests" onChange={handleChange} value={values.requests = edit[0]['requests']} />
-
-                            {/* Error Messages */}
-                            <p></p>
-                            {errors.requests && (
-                                <input disabled style={{ width: "100%", color: "red", border: "none", background: "none", textAlign: "center", fontSize: "18px" }} value={errors.requests} />
-                            )}
-
-                            <p style={{ marginTop: "35px" }}></p>
-                            {/* Submit Button */}
-                            <hr style={{ borderTop: "2px solid lightgrey" }} />
-                            <button type="submit" className="button1"><img style={{ marginBottom: "3px", width: "15px" }} src="baseline_send_black_24dp.png" /> RESERVE TABLE</button>
-
-                        </form>
+                    {/* Error Messages */}
+                    <div style={{ margin: "0 20% 20% 30%", position: "absolute" }}>
+                        {errors.name && (
+                            <input disabled style={{ color: "red", border: "none", background: "none", textAlign: "center", fontSize: "18px" }} value={errors.name} />
+                        )}
                     </div>
-                    :
-                    <div>
-                        {/* Form */}
-                        <form onSubmit={handleSubmit} noValidate>
-                            {/* Input Fields and Images */}
-
-                            <img style={{ width: "35px", marginBottom: "15px" }} src="baseline_person_black_24dp.png" alt="Person Icon" />
-                            <input style={{ width: "25%", border: "none", borderBottom: "2px solid grey", margin: "20px 20px 0 10px" }} type="text" id="name" name="name" placeholder="name" onChange={handleChange} value={values.name || ''} />
-                            <img style={{ width: "35px", marginBottom: "15px" }} src="baseline_check_box_black_24dp.png" alt="Meal Icon" />
-                            <select onChange={handleChange} style={{ width: "25%", border: "none", borderBottom: "2px solid grey", margin: "20px 0 0 5px" }} type="text" id="meal" name="meal" placeholder="meal"><option style={{ color: "grey" }} hidden >meal</option><option style={{ color: "black" }} value="Breakfast">Breakfast</option><option style={{ color: "black" }} value="Lunch">Lunch</option><option style={{ color: "black" }} value="Dinner">Dinner</option> </select>
-
-                            {/* Error Messages */}
-                            <div style={{ margin: "0 20% 20% 30%", position: "absolute" }}>
-                                {errors.name && (
-                                    <input disabled style={{ color: "red", border: "none", background: "none", textAlign: "center", fontSize: "18px" }} value={errors.name} />
-                                )}
-                            </div>
-                            <div >
-                                {errors.meal && (
-                                    <input disabled style={{ position: "absolute", width: "30%", color: "red", border: "none", background: "none", textAlign: "center", fontSize: "18px" }} value={errors.meal} />
-                                )}
-                            </div>
-
-                            <p style={{ marginTop: "35px" }}></p>
-
-                            {/* Input Fields and Images */}
-                            <img style={{ width: "35px", marginBottom: "15px" }} src="round_calendar_today_black_24dp.png" alt="Date Icon" />
-                            <input style={{ width: "25%", border: "none", borderBottom: "2px solid grey", margin: "20px 20px 0 5px" }} type="text" id="date" name="date" placeholder="date" onChange={handleChange} value={values.date || ''} />
-                            <img style={{ width: "35px", marginBottom: "15px" }} src="baseline_watch_later_black_24dp.png" alt="Time Icon" />
-                            <input style={{ width: "25%", border: "none", borderBottom: "2px solid grey", margin: "20px 0 0 5px" }} type="text" id="time" name="time" placeholder="time" onChange={handleChange} value={values.time || ''} />
-
-                            {/* Error Messages */}
-                            <div style={{ margin: "0 20% 20% 26%", position: "absolute" }}>
-                                {errors.date && (
-                                    <input disabled style={{ width: "155%", color: "red", border: "none", background: "none", textAlign: "center", fontSize: "18px" }} value={errors.date} />
-                                )}
-                            </div>
-                            <div >
-                                {errors.time && (
-                                    <input disabled style={{ position: "absolute", width: "30%", color: "red", border: "none", background: "none", textAlign: "center", fontSize: "18px" }} value={errors.time} />
-                                )}
-                            </div>
-
-                            <p style={{ marginTop: "35px" }}></p>
-
-                            {/* Input Fields and Images */}
-                            <img style={{ width: "35px", marginBottom: "15px" }} src="baseline_people_black_24dp.png" alt="Guest Icon" />
-                            <input style={{ width: "25%", border: "none", borderBottom: "2px solid grey", margin: "20px 20px 0 5px" }} type="number" id="guests" name="guests" placeholder="guests" onChange={handleChange} value={values.guests || ''} />
-                            <img style={{ width: "35px", marginBottom: "15px" }} src="baseline_favorite_black_24dp.png" alt="Heart Icon" />
-                            <input style={{ width: "25%", border: "none", borderBottom: "2px solid grey", margin: "20px 0 0 5px" }} type="text" id="foodpreferences" name="preferences" placeholder="Food preferences" onChange={handleChange} value={values.preferences || ''} />
-
-                            {/* Error Messages */}
-                            <div style={{ margin: "0 20% 20% 28%", position: "absolute" }}>
-                                {errors.guests && (
-                                    <input disabled style={{ width: "130%", color: "red", border: "none", background: "none", textAlign: "center", fontSize: "18px" }} value={errors.guests} />
-                                )}
-                            </div>
-                            <div >
-                                {errors.preferences && (
-                                    <input disabled style={{ position: "absolute", width: "30%", color: "red", border: "none", background: "none", textAlign: "center", fontSize: "18px" }} value={errors.preferences} />
-                                )}
-                            </div>
-
-                            <p style={{ marginTop: "35px" }}></p>
-
-                            {/* Input Fields and Images */}
-                            <img style={{ width: "35px", marginBottom: "35px" }} src=" baseline_edit_black_24dp.png" alt="Special Request Icon" />
-                            <textarea style={{ height: "40px", width: "54%", border: "none", borderBottom: "2px solid grey", margin: "20px 0 0 5px" }} type="text" id="specialrequests" name="requests" placeholder="Special Requests" onChange={handleChange} value={values.requests || ''} />
-
-                            {/* Error Messages */}
-                            <p></p>
-                            {errors.requests && (
-                                <input disabled style={{ width: "100%", color: "red", border: "none", background: "none", textAlign: "center", fontSize: "18px" }} value={errors.requests} />
-                            )}
-
-                            <p style={{ marginTop: "35px" }}></p>
-                            {/* Submit Button */}
-                            <hr style={{ borderTop: "2px solid lightgrey" }} />
-                            <button type="submit" className="button1"><img style={{ marginBottom: "3px", width: "15px" }} src="baseline_send_black_24dp.png" /> RESERVE TABLE</button>
-
-                        </form>
+                    <div >
+                        {errors.meal && (
+                            <input disabled style={{ position: "absolute", width: "30%", color: "red", border: "none", background: "none", textAlign: "center", fontSize: "18px" }} value={errors.meal} />
+                        )}
                     </div>
-                }
+
+                    <p style={{ marginTop: "35px" }}></p>
+
+                    {/* Input Fields and Images */}
+                    <img style={{ width: "35px", marginBottom: "15px" }} src="round_calendar_today_black_24dp.png" alt="Date Icon" />
+                    <input style={{ width: "25%", border: "none", borderBottom: "2px solid grey", margin: "20px 20px 0 5px" }} type="text" id="date" name="date" placeholder="date" onChange={handleChange} value={values.date || ''} />
+                    <img style={{ width: "35px", marginBottom: "15px" }} src="baseline_watch_later_black_24dp.png" alt="Time Icon" />
+                    <input style={{ width: "25%", border: "none", borderBottom: "2px solid grey", margin: "20px 0 0 5px" }} type="text" id="time" name="time" placeholder="time" onChange={handleChange} value={values.time || ''} />
+
+                    {/* Error Messages */}
+                    <div style={{ margin: "0 20% 20% 26%", position: "absolute" }}>
+                        {errors.date && (
+                            <input disabled style={{ width: "155%", color: "red", border: "none", background: "none", textAlign: "center", fontSize: "18px" }} value={errors.date} />
+                        )}
+                    </div>
+                    <div >
+                        {errors.time && (
+                            <input disabled style={{ position: "absolute", width: "30%", color: "red", border: "none", background: "none", textAlign: "center", fontSize: "18px" }} value={errors.time} />
+                        )}
+                    </div>
+
+                    <p style={{ marginTop: "35px" }}></p>
+
+                    {/* Input Fields and Images */}
+                    <img style={{ width: "35px", marginBottom: "15px" }} src="baseline_people_black_24dp.png" alt="Guest Icon" />
+                    <input style={{ width: "25%", border: "none", borderBottom: "2px solid grey", margin: "20px 20px 0 5px" }} type="number" id="guests" name="guests" placeholder="guests" onChange={handleChange} value={values.guests || ''} />
+                    <img style={{ width: "35px", marginBottom: "15px" }} src="baseline_favorite_black_24dp.png" alt="Heart Icon" />
+                    <input style={{ width: "25%", border: "none", borderBottom: "2px solid grey", margin: "20px 0 0 5px" }} type="text" id="foodpreferences" name="preferences" placeholder="Food preferences" onChange={handleChange} value={values.preferences || ''} />
+
+                    {/* Error Messages */}
+                    <div style={{ margin: "0 20% 20% 28%", position: "absolute" }}>
+                        {errors.guests && (
+                            <input disabled style={{ width: "130%", color: "red", border: "none", background: "none", textAlign: "center", fontSize: "18px" }} value={errors.guests} />
+                        )}
+                    </div>
+                    <div >
+                        {errors.preferences && (
+                            <input disabled style={{ position: "absolute", width: "30%", color: "red", border: "none", background: "none", textAlign: "center", fontSize: "18px" }} value={errors.preferences} />
+                        )}
+                    </div>
+
+                    <p style={{ marginTop: "35px" }}></p>
+
+                    {/* Input Fields and Images */}
+                    <img style={{ width: "35px", marginBottom: "35px" }} src=" baseline_edit_black_24dp.png" alt="Special Request Icon" />
+                    <textarea style={{ height: "40px", width: "54%", border: "none", borderBottom: "2px solid grey", margin: "20px 0 0 5px" }} type="text" id="specialrequests" name="requests" placeholder="Special Requests" onChange={handleChange} value={values.requests || ''} />
+
+                    {/* Error Messages */}
+                    <p></p>
+                    {errors.requests && (
+                        <input disabled style={{ width: "100%", color: "red", border: "none", background: "none", textAlign: "center", fontSize: "18px" }} value={errors.requests} />
+                    )}
+
+                    <p style={{ marginTop: "35px" }}></p>
+                    {/* Submit Button */}
+                    <hr style={{ borderTop: "2px solid lightgrey" }} />
+                    <button type="submit" className="button1"><img style={{ marginBottom: "3px", width: "15px" }} src="baseline_send_black_24dp.png" /> RESERVE TABLE</button>
+
+                </form>
             </div>
         </div>
     )
