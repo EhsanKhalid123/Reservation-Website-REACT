@@ -1,5 +1,5 @@
 // Import statements for Libraries.
-import react, { useState, useEffect, useContext } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import formInfor from "./formInfor";
 import MessageContext from "./MessageContext";
@@ -16,6 +16,7 @@ function ConfirmationTable(props) {
     const { setMessage } = useContext(MessageContext);
 
     const BOOKING_KEY = "Booking";
+    const EDITING_KEY = "EDITING";
 
     // UseEffect Function to load the Form Details
     // This function here is so props for formInfo2 are updated and stored in the useState Variable properly.
@@ -37,8 +38,19 @@ function ConfirmationTable(props) {
                 <strong>{formInfo.name}</strong> Your Reservation Has Been Confirmed &amp; Stored in Local Storage!
             </>);
 
-        { history.push("/") }
+         history.push("/") 
 
+    };
+
+    // Goes Back to Allow users to Change User Input Data
+    const handleBack = async (event) => {
+        event.preventDefault();
+
+        await localStorage.setItem(EDITING_KEY, JSON.stringify(formInfo));
+
+        await props.editinfo(true);
+
+        await history.push("/") 
     };
 
     // Returns/Displays HTML elements on the page.
@@ -108,7 +120,7 @@ function ConfirmationTable(props) {
                 :
                 <div>
                     <p style={{ color: "green", fontWeight: "bold", fontSize: "20px" }}>Do you want to confirm your Reservation:</p>
-                    <button className="button2">Go Back to Edit</button>
+                    <button className="button2" onClick={handleBack}>Go Back to Edit</button>
                     <button className="button3" onClick={handleSubmit}><img style={{ marginBottom: "3px", width: "15px" }} src="baseline_send_black_24dp.png" /> Confirm</button>
                 </div>
             }

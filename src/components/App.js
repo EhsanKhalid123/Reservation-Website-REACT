@@ -10,6 +10,7 @@ import MessageContext from "./MessageContext";
 // Functional App Component, Main Component Used to Display.
 function App() {
   const [submission, setSubmission] = useState(false);
+  const [editInfo, setEditInfo] = useState(false);
   const [message, setMessage] = useState(null);
   const [formInfo, setFormInfo] = useState(null);
   // Below Variable is for attempting to pass useState Variables through Props but doesn't work So used useContext above for it to work
@@ -18,6 +19,10 @@ function App() {
   const submission2 = async (value, formInfo2) => {
     await setSubmission(value)
     await setFormInfo2([formInfo2])
+  }
+
+  const editinfo = async (info) => {
+    await setEditInfo(info);
   }
 
   // Set message to null automatically after a period of time.
@@ -42,13 +47,13 @@ function App() {
           {/* Displays the Reservation Form on the page by being imported */}
           <Router>
             <Switch>
-              {/* {submission === true && */}
+              {submission === true &&
               <Route path="/ConfirmationTable">
-                <ConfirmationTable {...formInfo} {...formInfo2} />
+                <ConfirmationTable {...formInfo} {...formInfo2} editinfo={editinfo}   />
               </Route>
-              {/* } */}
+              }
               <Route path="/">
-                <ReservationForm submission2={submission2} />
+                <ReservationForm submission2={submission2} editInfo={editInfo} />
               </Route>
             </Switch>
           </Router>
