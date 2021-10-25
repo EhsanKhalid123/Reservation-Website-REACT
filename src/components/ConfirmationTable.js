@@ -32,13 +32,16 @@ function ConfirmationTable(props) {
     const handleSubmit = (event) => {
         event.preventDefault();
 
+        // Stores in Local Storage
         localStorage.setItem(BOOKING_KEY, JSON.stringify(formInfo));
+        // Success message
         setMessage(
             <>
                 <strong>{formInfo.name}</strong> Your Reservation Has Been Confirmed &amp; Stored in Local Storage!
             </>);
 
         props.editinfo(false);
+        // Removes Editing Details from Local Storage
         localStorage.removeItem(EDITING_KEY)
 
         history.push("/")

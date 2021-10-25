@@ -10,7 +10,7 @@ function ReservationForm(props) {
     const EDITING_KEY = "EDITING";
 
     const getEditInfo = () => {
-        // Extract user input data from local storage.
+        // Extracts user input data from local storage.
         const data = localStorage.getItem(EDITING_KEY);
 
         // Convert data to objects.
