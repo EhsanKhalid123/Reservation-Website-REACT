@@ -1,6 +1,4 @@
-Assignment 3 - Further Web Programming - RMIT University
+A Reservation Website for booking tables at a Restaurant using React.js and Local Storage
 
-Completed All Tasks
-
-By Ehsan Khalid (s3838975)
+By Ehsan Khalid
 
